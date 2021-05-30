@@ -4,11 +4,15 @@ from weather_forcast.views import \
     get_beaufort_scale, \
     normalize_angle, \
     get_directions_from_degrees, \
-    generate_weather_information
-from weather_forcast.test_values import \
+    generate_weather_information, \
+    get_data_for_forcast, \
+    get_data_for_city
+from weather_forcast.data_files import \
     response_template, \
     forcast_template, \
-    test_response
+    test_response, \
+    forcast_wrong_lat, \
+    response_template_city_not_found
 
 
 class Test_Weather_Information(TestCase):
@@ -50,9 +54,19 @@ class Test_Weather_Information(TestCase):
             self.assertEqual(get_directions_from_degrees(key), values[key])
 
     @patch("weather_forcast.views.request_url_json")
+    def test_get_data_for_forcast_for_wrong_lat(self, mock_request):
+        mock_request.return_value = forcast_wrong_lat
+        self.assertEqual(get_data_for_forcast(12345, 4.6097)[0], forcast_wrong_lat)
+
+    @patch("weather_forcast.views.request_url_json")
+    def test_get_data_for_city_wrong_city(self, mock_request):
+        mock_request.return_value = response_template_city_not_found
+        self.assertEqual(get_data_for_city(12345, "co")[0], response_template_city_not_found)
+
+    @patch("weather_forcast.views.request_url_json")
     def test_generate_weather_information(self, mock_request):
         mock_request.side_effect = [response_template, forcast_template]
-        response = generate_weather_information("Bogota", "co")
+        response = generate_weather_information("Bogota", "co")[0]
         for res in response:
             if (res != "requested_time"):
                 self.assertEqual(response[res], test_response[res])

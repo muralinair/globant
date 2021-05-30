@@ -44,6 +44,10 @@ response_template = {
     "name": "Bogotá",
     "cod": 200
 }
+response_template_city_not_found={
+    "cod": "404",
+    "message": "city not found"
+}
 forcast_template={
         "lat": 4.6097,
         "lon": -74.0817,
@@ -125,6 +129,11 @@ forcast_template={
             }
         ]
 }
+forcast_wrong_lat={
+    "cod": "400",
+    "message": "wrong longitude"
+}
+
 test_response={
     'location_name': 'Bogotá, CO',
     'temperature': '284.88 °C',
@@ -134,7 +143,7 @@ test_response={
     'humidity': '94%',
     'sunrise': '10:43 AM',
     'sunset': '11:05 PM',
-    'geo_coordinates': '[4.6097, -74.0817]',
+    'geo_coordinates': [4.6097, -74.0817],
     'requested_time': '2021-05-30 17:05:05.386077',
     'forcast': [
         {
