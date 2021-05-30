@@ -1,0 +1,6 @@
+/venv/*
+/globant_coding_test/db.sqlite3
+/.idea
+/globant_coding_test/__pycache__/
+/weather_forcast/migrations/__pycache__/
+
